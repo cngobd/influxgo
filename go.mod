@@ -1,4 +1,4 @@
-module influxgo
+module github.com/cngobd/influxgo
 
 go 1.15
 
