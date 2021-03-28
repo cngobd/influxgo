@@ -1,6 +1,8 @@
 package influxgo
 
 import (
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -37,5 +39,17 @@ func queryWork(url string) ([]byte, error){
 		return nil, err
 	} else {
 		return all, nil
+	}
+}
+func (f *IfxCli) Ping() error {
+	url := fmt.Sprintf("%v/ping", f.baseReqUrl)
+	get, err := http.Get(url)
+	if err != nil {
+		return errors.New(fmt.Sprintf("ping fail:%v", err.Error()))
+	}
+	if get.StatusCode == 204 {
+		return nil
+	} else {
+		return errors.New(fmt.Sprintf("ping fail, status code:%v", get.StatusCode))
 	}
 }
