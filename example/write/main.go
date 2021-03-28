@@ -1,7 +1,7 @@
 package main
 
 import (
-	"influxgo"
+	"github.com/cngobd/influxgo"
 )
 
 func main() {
@@ -21,6 +21,8 @@ func main() {
 	data.Tags["myTag2"] = "t2"
 	//set fields
 	data.Fields["myField1"] = "f1"
+	data.Fields["myf2"] = "f2"
+	data.Fields["myf3"] = "f3"
 	//write the data into db
 	err := c.Write(data)
 	if err != nil {

@@ -26,8 +26,9 @@ func (f *IfxCli) Write(data WriteData) error {
 	}
 	postData = fmt.Sprintf("%v ", postData)
 	for k, v := range data.Fields {
-		postData = fmt.Sprintf("%v%v=%v", postData, k, v)
+		postData = fmt.Sprintf("%v%v=%v,", postData, k, v)
 	}
+	postData = postData[:len(postData) - 1]
 	url := fmt.Sprintf(
 		"http://152.32.173.198:3306/write?db=%v&u=%v&p=%v",
 		data.DB, f.User, f.PassWord,
