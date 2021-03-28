@@ -1,5 +1,4 @@
 package influxgo
-
 import (
 	"encoding/json"
 	"errors"
@@ -16,6 +15,7 @@ type IfxCli struct {
 	baseReqUrl string
 	upParam    string
 }
+//github.com/cngobd/influxgo
 type IfxResp struct {
 	Name    string     `json:"name"`
 	Columns []string   `json:"columns"`
