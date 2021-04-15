@@ -119,3 +119,22 @@ func umsQueryResp(data []byte) (QueryResp, error) {
 		Values: u.Results[0].Series[0].Values}, err
 	}
 }
+
+func (f *IfxCli) QueryBetweenWithTag (
+	db, measure, tagName, tagValue string, start, end int, timeType string) (QueryResp, error) {
+	s, err := parseTimeType(start, timeType)
+	e, err := parseTimeType(end, timeType)
+	if err != nil {
+		return QueryResp{}, err
+	}
+	q := fmt.Sprintf("select%%20*%%20from%%20\"%v\"%%20where%%20time%%20>%%20%v%%20and%%20time%%20<%%20%v%%20and%%20\"%v\"%%20=%%20'%v'",
+		measure, s, e, tagName, tagValue)
+	url := fmt.Sprintf("%v/query?db=%v&u=%v&p=%v&q=%v",
+		f.baseReqUrl, db, f.User, f.PassWord, q)
+	log.Printf("url:%v", url)
+	body, err := sendQueryRequest(url)
+	if err != nil {
+		return QueryResp{}, err
+	}
+	return umsQueryResp(body)
+}
